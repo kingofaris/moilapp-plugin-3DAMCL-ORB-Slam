@@ -1,7 +1,9 @@
-# ORB-SLAM3
+# 3D AMCL USING ORB ALGPORITHM-SLAM3
 
-### V1.0, December 22th, 2021
-**Authors:** Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, [José M. M. Montiel](http://webdiis.unizar.es/~josemari/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/).
+### Moilapp-Plugin-V1.0, March 21th, 2024
+ Modify by Herusyahputra-TelU-Lecturer
+
+====================================================================
 
 The [Changelog](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/master/Changelog.md) describes the features of each version.
 
@@ -233,3 +235,5 @@ A flag in `include\Config.h` activates time measurements. It is necessary to unc
 
 # 9. Calibration
 You can find a tutorial for visual-inertial calibration and a detailed description of the contents of valid configuration files at  `Calibration_Tutorial.pdf`
+
+**Reference:** Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, [José M. M. Montiel](http://webdiis.unizar.es/~josemari/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/).
