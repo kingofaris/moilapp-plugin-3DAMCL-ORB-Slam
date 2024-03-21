@@ -1,21 +1,9 @@
-# 3D AMCL USING ORB ALGPORITHM-SLAM3
+# 3D AMCL USING ORB ALGORITHM-SLAM3
 
 ### Moilapp-Plugin-V1.0, March 21th, 2024
  Modify by Herusyahputra-TelU-Lecturer
 
 ====================================================================
-
-How to run | Usage
-
-Mono Image
-```commandline
-./Examples/Stereo/stereo_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo/EuRoC.yaml dataset/V1_01_easy ./Examples/Stereo/EuRoC_TimeStamps/V101.txt
-```
-
-Stereo Images
-```commandline
-./Examples/Stereo-Inertial/stereo_inertial_tum_vi ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/TUM-VI.yaml dataset/dataset-corridor4_512_16/mav0/cam0/data dataset/dataset-corridor4_512_16/mav0/cam1/data ./Examples/Stereo-Inertial/TUM_TimeStamps/dataset-corridor4_512.txt ./Examples/Stereo-Inertial/TUM_IMU/dataset-corridor4_512.txt dataset-corridor4
-```
 
 The [Changelog](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/master/Changelog.md) describes the features of each version.
 
@@ -43,6 +31,7 @@ alt="ORB-SLAM3" width="240" height="180" border="10" /></a>
 [Monocular] Raúl Mur-Artal, José M. M. Montiel and Juan D. Tardós. **ORB-SLAM: A Versatile and Accurate Monocular SLAM System**. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015. (**2015 IEEE Transactions on Robotics Best Paper Award**). **[PDF](https://arxiv.org/pdf/1502.00956.pdf)**.
 
 [DBoW2 Place Recognition] Dorian Gálvez-López and Juan D. Tardós. **Bags of Binary Words for Fast Place Recognition in Image Sequences**. *IEEE Transactions on Robotics,* vol. 28, no. 5, pp. 1188-1197, 2012. **[PDF](http://doriangalvez.com/php/dl.php?dlp=GalvezTRO12.pdf)**
+
 
 # 1. License
 
@@ -123,6 +112,19 @@ Directory `Examples` contains several demo programs and calibration files to run
 
 ```
 ./Examples/Stereo-Inertial/stereo_inertial_realsense_D435i Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/RealSense_D435i.yaml
+```
+
+
+### Version 2  How to run | Usage
+
+Mono Image
+```commandline
+./Examples/Stereo/stereo_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo/EuRoC.yaml dataset/V1_01_easy ./Examples/Stereo/EuRoC_TimeStamps/V101.txt
+```
+
+Stereo Images
+```commandline
+./Examples/Stereo-Inertial/stereo_inertial_tum_vi ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/TUM-VI.yaml dataset/dataset-corridor4_512_16/mav0/cam0/data dataset/dataset-corridor4_512_16/mav0/cam1/data ./Examples/Stereo-Inertial/TUM_TimeStamps/dataset-corridor4_512.txt ./Examples/Stereo-Inertial/TUM_IMU/dataset-corridor4_512.txt dataset-corridor4
 ```
 
 # 5. EuRoC Examples
