@@ -1,7 +1,7 @@
 # 3D AMCL USING ORB ALGORITHM-SLAM3
 
 ### Moilapp-Plugin-V1.0, March 21th, 2024
- Modify by Herusyahputra-TelU-Lecturer
+ Modify by Rizky-Ramadhan-Basyir
 
 ====================================================================
 
