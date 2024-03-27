@@ -315,7 +315,7 @@ sudo make install
 git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git 
 cd ORB_SLAM3
 ```
-We need to change the header file gedit ./include/LoopClosing.h at line 51 from
+We need to change the header file `gedit ./include/LoopClosing.h` at line 51 from
 ```
 Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > > KeyFrameAndPose;
 to
@@ -328,7 +328,7 @@ Now Simply just run (if you encounter compiler, try to run the this shell script
 ./build.sh
 ```
 # Command to run the datasets:
-Run the following in the `~/Dev/ORB_SLAM3/` file.
+Run the following in the `~/ORB_SLAM3/` file.
 
 Make sure you have downloaded the dataset
 
@@ -368,7 +368,7 @@ In file included from /usr/local/include/pangolin/utils/signal_slot.h:3,
   109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
 
 ```
-update Cmakelists.txt from -std=c++11 to -std=c++14 use *nano Cmakelists.txt*
+update Cmakelists.txt from -std=c++11 to -std=c++14 use `nano Cmakelists.txt` 
 
 after making changes :
 ```
@@ -392,7 +392,7 @@ This is an error due to the Eigen version.
  ../core/base_edge.h: 33:10: fatal error: Eigen/Core: No such file or directory 
 #include <Eigen/Core>
 ```
-Replace all of #include <Eigen/(any packages)> to #include <eigen3/Eigen/(any packages)>.
+Replace all of `#include <Eigen/(any packages)> to #include <eigen3/Eigen/(any packages)>.`
 
 For example:
 ```
@@ -400,4 +400,4 @@ For example:
 to
 #include <eigen3/Eigen/Core>
 ```
-These changes have to made in all the files using the Eigen dependency in the  *ORB_SLAM3/include/* folder.
+These changes have to made in all the files using the Eigen dependency in the `ORB_SLAM3/include/` folder.
