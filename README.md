@@ -348,7 +348,7 @@ Then, choose one of the following to run. A map viewer as well as an image viewe
 ```
 The thing you need to pay attention to is that for each path above, it must be adjusted to the location of the file that will be accessed on your laptop
 
-# ERROR BULDING ORB-SLAM3
+# ERROR BUILD ORB-SLAM3
 ## Error-1
 ```
 In file included from /usr/local/include/pangolin/utils/signal_slot.h:3,
