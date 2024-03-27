@@ -310,3 +310,57 @@ cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release 
 sudo make install
 ```
+after completing the build for each required Prerequisites. Next, do building on orb-slam3. In accordance with the Building ORB-SLAM3 command above.
+# ERROR BULDING ORB-SLAM3
+## Error-1
+```
+In file included from /usr/local/include/pangolin/utils/signal_slot.h:3,
+                 from /usr/local/include/pangolin/windowing/window.h:35,
+                 from /usr/local/include/pangolin/display/display.h:34,
+                 from /usr/local/include/pangolin/pangolin.h:38,
+                 from /home/a616708946/slambook/ch5/code/disparity.cpp:8:
+/usr/local/include/sigslot/signal.hpp:109:79: error: ‘decay_t’ is not a member of ‘std’; did you mean ‘decay’?
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+      |                                                                               ^~~~~~~
+      |                                                                               decay
+/usr/local/include/sigslot/signal.hpp:109:79: error: ‘decay_t’ is not a member of ‘std’; did you mean ‘decay’?
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+      |                                                                               ^~~~~~~
+      |                                                                               decay
+/usr/local/include/sigslot/signal.hpp:109:87: error: template argument 1 is invalid
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+
+```
+update Cmakelists.txt from -std=c++11 to -std=c++14 use *nano Cmakelists.txt*
+
+after making changes :
+```
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+   add_definitions(-DCOMPILEDWITHC11)
+   message(STATUS "Using flag -std=c++14.")
+elseif(COMPILER_SUPPORTS_CXX0X)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+   add_definitions(-DCOMPILEDWITHC0X)
+   message(STATUS "Using flag -std=c++0x.")
+else()
+   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+```
+## Error-2
+This is an error due to the Eigen version.
+```
+ ../core/base_edge.h: 33:10: fatal error: Eigen/Core: No such file or directory 
+#include <Eigen/Core>
+```
+Replace all of #include <Eigen/(any packages)> to #include <eigen3/Eigen/(any packages)>.
+
+For example:
+```
+#include <Eigen/Core>
+to
+#include <eigen3/Eigen/Core>
+```
+These changes have to made in all the files using the Eigen dependency in the  *ORB_SLAM3/include/* folder.
