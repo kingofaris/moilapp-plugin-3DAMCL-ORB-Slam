@@ -235,6 +235,8 @@ Install the VMware Workstation Player virtual machine. I did this on my Windows 
 
 Download the Ubuntu 20.04 or Ubuntu 22.04 LTS iso. In the ORB-SLAM3 Setup process, I used Ubuntu version 22.04 LTS
 
+[Ubuntu Iso](https://ubuntu.com/download/desktop)
+
 After setting up the OS, you may want to connect a USB device, such as a drive where you store data. You can do this via the top left tab, but by default all the options are grayed out. To fix this, shut down the VM, navigate to your VM (mine is in Documents/Virtual Machines), and open the .vmx file with a text editor. Delete the following lines
 
 ## Install Dependencies
