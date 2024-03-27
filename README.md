@@ -328,7 +328,7 @@ Now Simply just run (if you encounter compiler, try to run the this shell script
 ./build.sh
 ```
 # Command to run the datasets:
-Run the following in the '~/Dev/ORB_SLAM3/' file.
+Run the following in the `~/Dev/ORB_SLAM3/` file.
 
 Make sure you have downloaded the dataset
 
