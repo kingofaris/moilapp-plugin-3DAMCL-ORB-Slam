@@ -310,7 +310,44 @@ cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release 
 sudo make install
 ```
-after completing the build for each required Prerequisites. Next, do building on orb-slam3. In accordance with the Building ORB-SLAM3 command above.
+## 5. ORB-SLAM3
+```
+git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git 
+cd ORB_SLAM3
+```
+We need to change the header file gedit ./include/LoopClosing.h at line 51 from
+```
+Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > > KeyFrameAndPose;
+to
+Eigen::aligned_allocator<std::pair<KeyFrame *const, g2o::Sim3> > > KeyFrameAndPose; 
+```
+in order to make this comiple. Now, we can comiple ORB-SLAM3 and it dependencies as DBoW2 and g2o.
+
+Now Simply just run (if you encounter compiler, try to run the this shell script 2 or 3 more time.)
+```
+./build.sh
+```
+# Command to run the datasets:
+Run the following in the *~/Dev/ORB_SLAM3/* file.
+
+Make sure you have downloaded the dataset
+
+Then, choose one of the following to run. A map viewer as well as an image viewer should appear after it finishes setup.
+```
+# Mono
+./Examples/Monocular/mono_euroc ./Vocabulary/ORBvoc.txt ./Examples/Monocular/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Monocular/EuRoC_TimeStamps/MH01.txt dataset-MH01_mono
+
+# Mono + Inertial
+./Examples/Monocular-Inertial/mono_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Monocular-Inertial/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Monocular-Inertial/EuRoC_TimeStamps/MH01.txt dataset-MH01_monoi
+
+# Stereo
+./Examples/Stereo/stereo_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Stereo/EuRoC_TimeStamps/MH01.txt dataset-MH01_stereo
+
+# Stereo + Inertial
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH01.txt dataset-MH01_stereoi
+```
+The thing you need to pay attention to is that for each path above, it must be adjusted to the location of the file that will be accessed on your laptop
+
 # ERROR BULDING ORB-SLAM3
 ## Error-1
 ```
