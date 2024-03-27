@@ -239,7 +239,7 @@ Download the Ubuntu 20.04 or Ubuntu 22.04 LTS iso. In the ORB-SLAM3 Setup proces
 
 After setting up the OS, you may want to connect a USB device, such as a drive where you store data. You can do this via the top left tab, but by default all the options are grayed out. To fix this, shut down the VM, navigate to your VM (mine is in Documents/Virtual Machines), and open the .vmx file with a text editor. Delete the following lines
 
-## Install Dependencies
+## 1. Install Dependencies
 ```
 sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
 sudo apt update
@@ -250,3 +250,17 @@ sudo apt-get install libglew-dev libboost-all-dev libssl-dev
 sudo apt install libeigen3-dev
 sudo apt-get install libcanberra-gtk-module
 ```
+Make sure that you install every Dependency required to run ORB-SLAM3
+
+# Install Prerequisites
+## 1. Install OpenCv
+You need to install opencv on version 4.2.0. 
+
+make sure to follow these steps
+```
+cd ~
+mkdir Dev && cd Dev
+git clone https://github.com/opencv/opencv.git
+cd opencv
+```
+After adapting to the opencv directory, then run 
