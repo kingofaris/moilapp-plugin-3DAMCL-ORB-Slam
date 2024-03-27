@@ -225,3 +225,26 @@ A flag in `include\Config.h` activates time measurements. It is necessary to unc
 You can find a tutorial for visual-inertial calibration and a detailed description of the contents of valid configuration files at  `Calibration_Tutorial.pdf`
 
 **Reference:** Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, [José M. M. Montiel](http://webdiis.unizar.es/~josemari/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/).
+
+# ORB-SLAM3 SETUP
+You'll have the best chance of getting ORB SLAM 3 working if you follow these instructions exactly, including using a fresh Ubuntu 20.04 installation on a newly created virtual machine.
+
+Make sure your machine has at least 16GB RAM and 4 cores. The recommended RAM is 32GB. But if this is not possible, you can try 4 GB RAM, but the results will not be optimal
+
+Install the VMware Workstation Player virtual machine. I did this on my Windows 10 desktop PC. During setup, adjust the hardware to use the maximum recommended amount of RAM, and 4 processor cores. Every time you start a VM, shut down everything running on the PC to allow as much RAM to be used by ORB_SLAM3 as possible.
+
+Download the Ubuntu 20.04 or Ubuntu 22.04 LTS iso. In the ORB-SLAM3 Setup process, I used Ubuntu version 22.04 LTS
+
+After setting up the OS, you may want to connect a USB device, such as a drive where you store data. You can do this via the top left tab, but by default all the options are grayed out. To fix this, shut down the VM, navigate to your VM (mine is in Documents/Virtual Machines), and open the .vmx file with a text editor. Delete the following lines
+
+## Install Dependencies
+```
+sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
+sudo apt update
+sudo apt-get install build-essential
+sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev libjasper-dev
+sudo apt-get install libglew-dev libboost-all-dev libssl-dev
+sudo apt install libeigen3-dev
+sudo apt-get install libcanberra-gtk-module
+```
