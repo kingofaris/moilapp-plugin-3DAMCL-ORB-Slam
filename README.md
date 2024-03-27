@@ -2,6 +2,8 @@
 
 ### Moilapp-Plugin-V1.0, March 21th, 2024
  Modify by Rizky-Ramadhan-Basyir
+ 
+ Modify by I-Made-Adhika-Dananjaya
 
 ====================================================================
 
@@ -223,3 +225,179 @@ A flag in `include\Config.h` activates time measurements. It is necessary to unc
 You can find a tutorial for visual-inertial calibration and a detailed description of the contents of valid configuration files at  `Calibration_Tutorial.pdf`
 
 **Reference:** Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, [José M. M. Montiel](http://webdiis.unizar.es/~josemari/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/).
+
+# ORB-SLAM3 SETUP
+You'll have the best chance of getting ORB SLAM 3 working if you follow these instructions exactly, including using a fresh Ubuntu 20.04 installation on a newly created virtual machine.
+
+Make sure your machine has at least 16GB RAM and 4 cores. The recommended RAM is 32GB. But if this is not possible, you can try 4 GB RAM, but the results will not be optimal
+
+Install the VMware Workstation Player virtual machine. I did this on my Windows 10 desktop PC. During setup, adjust the hardware to use the maximum recommended amount of RAM, and 4 processor cores. Every time you start a VM, shut down everything running on the PC to allow as much RAM to be used by ORB_SLAM3 as possible.
+
+Download the Ubuntu 20.04 or Ubuntu 22.04 LTS iso. In the ORB-SLAM3 Setup process, I used Ubuntu version 22.04 LTS
+
+[Ubuntu Iso](https://ubuntu.com/download/desktop)
+
+After setting up the OS, you may want to connect a USB device, such as a drive where you store data. You can do this via the top left tab, but by default all the options are grayed out. To fix this, shut down the VM, navigate to your VM (mine is in Documents/Virtual Machines), and open the .vmx file with a text editor. Delete the following lines
+
+## 1. Install Dependencies
+```
+sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
+sudo apt update
+sudo apt-get install build-essential
+sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev libjasper-dev
+sudo apt-get install libglew-dev libboost-all-dev libssl-dev
+sudo apt install libeigen3-dev
+sudo apt-get install libcanberra-gtk-module
+```
+Make sure that you install every Dependency required to run ORB-SLAM3
+
+# Install Prerequisites
+## 1. Install OpenCv
+You need to install opencv on version 4.2.0. 
+
+make sure to follow these steps
+```
+cd ~
+mkdir Dev && cd Dev
+git clone https://github.com/opencv/opencv.git
+cd opencv
+```
+After adapting to the opencv directory, then run 'nano ./modules/videoio/src/cap_ffmpeg_impl.hpp'. Then add the following constants just below the module you entered :
+```
+#define AV_CODEC_FLAG_GLOBAL_HEADER (1 << 22)
+#define CODEC_FLAG_GLOBAL_HEADER AV_CODEC_FLAG_GLOBAL_HEADER
+#define AVFMT_RAWPICTURE 0x0020
+```
+Now build it
+```
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=Release -D WITH_CUDA=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make -j 3
+sudo make install
+```
+## 2.Install Pangolin
+We will use an older commit version of Pangolin for compatibility.
+```
+cd ~/Dev
+git clone https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin 
+git checkout 86eb4975fc4fc8b5d92148c2e370045ae9bf9f5d
+mkdir build 
+cd build 
+cmake .. -D CMAKE_BUILD_TYPE=Release 
+make -j 3 
+sudo make install
+```
+## 3. Install DBoW2
+```
+cd ~/Dev
+git clone https://github.com/dorian3d/DBoW2.git
+cd DBoW2
+mkdir build 
+cd build 
+cmake .. -DCMAKE_BUILD_TYPE=Release 
+sudo make install
+```
+## 4. Install g2o
+```
+cd ~/Dev
+git clone https://github.com/RainerKuemmerle/g2o.git 
+cd g2o
+mkdir build 
+cd build 
+cmake .. -DCMAKE_BUILD_TYPE=Release 
+sudo make install
+```
+## 5. ORB-SLAM3
+```
+git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git 
+cd ORB_SLAM3
+```
+We need to change the header file `gedit ./include/LoopClosing.h` at line 51 from
+```
+Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > > KeyFrameAndPose;
+to
+Eigen::aligned_allocator<std::pair<KeyFrame *const, g2o::Sim3> > > KeyFrameAndPose; 
+```
+in order to make this comiple. Now, we can comiple ORB-SLAM3 and it dependencies as DBoW2 and g2o.
+
+Now Simply just run (if you encounter compiler, try to run the this shell script 2 or 3 more time.)
+```
+./build.sh
+```
+# Command to run the datasets:
+Run the following in the `~/ORB_SLAM3/` file.
+
+Make sure you have downloaded the dataset
+
+Then, choose one of the following to run. A map viewer as well as an image viewer should appear after it finishes setup.
+```
+# Mono
+./Examples/Monocular/mono_euroc ./Vocabulary/ORBvoc.txt ./Examples/Monocular/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Monocular/EuRoC_TimeStamps/MH01.txt dataset-MH01_mono
+
+# Mono + Inertial
+./Examples/Monocular-Inertial/mono_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Monocular-Inertial/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Monocular-Inertial/EuRoC_TimeStamps/MH01.txt dataset-MH01_monoi
+
+# Stereo
+./Examples/Stereo/stereo_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Stereo/EuRoC_TimeStamps/MH01.txt dataset-MH01_stereo
+
+# Stereo + Inertial
+./Examples/Stereo-Inertial/stereo_inertial_euroc ./Vocabulary/ORBvoc.txt ./Examples/Stereo-Inertial/EuRoC.yaml ~/Datasets/EuRoc/MH01 ./Examples/Stereo-Inertial/EuRoC_TimeStamps/MH01.txt dataset-MH01_stereoi
+```
+The thing you need to pay attention to is that for each path above, it must be adjusted to the location of the file that will be accessed on your laptop
+
+# ERROR BUILD ORB-SLAM3
+## Error-1
+```
+In file included from /usr/local/include/pangolin/utils/signal_slot.h:3,
+                 from /usr/local/include/pangolin/windowing/window.h:35,
+                 from /usr/local/include/pangolin/display/display.h:34,
+                 from /usr/local/include/pangolin/pangolin.h:38,
+                 from /home/a616708946/slambook/ch5/code/disparity.cpp:8:
+/usr/local/include/sigslot/signal.hpp:109:79: error: ‘decay_t’ is not a member of ‘std’; did you mean ‘decay’?
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+      |                                                                               ^~~~~~~
+      |                                                                               decay
+/usr/local/include/sigslot/signal.hpp:109:79: error: ‘decay_t’ is not a member of ‘std’; did you mean ‘decay’?
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+      |                                                                               ^~~~~~~
+      |                                                                               decay
+/usr/local/include/sigslot/signal.hpp:109:87: error: template argument 1 is invalid
+  109 | constexpr bool is_weak_ptr_compatible_v = detail::is_weak_ptr_compatible<std::decay_t<P>>::value;
+
+```
+update Cmakelists.txt from -std=c++11 to -std=c++14 use `nano Cmakelists.txt` 
+
+after making changes :
+```
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+   add_definitions(-DCOMPILEDWITHC11)
+   message(STATUS "Using flag -std=c++14.")
+elseif(COMPILER_SUPPORTS_CXX0X)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+   add_definitions(-DCOMPILEDWITHC0X)
+   message(STATUS "Using flag -std=c++0x.")
+else()
+   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+```
+## Error-2
+This is an error due to the Eigen version.
+```
+ ../core/base_edge.h: 33:10: fatal error: Eigen/Core: No such file or directory 
+#include <Eigen/Core>
+```
+Replace all of `#include <Eigen/(any packages)> to #include <eigen3/Eigen/(any packages)>.`
+
+For example:
+```
+#include <Eigen/Core>
+to
+#include <eigen3/Eigen/Core>
+```
+These changes have to made in all the files using the Eigen dependency in the `ORB_SLAM3/include/` folder.
