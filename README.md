@@ -263,4 +263,50 @@ mkdir Dev && cd Dev
 git clone https://github.com/opencv/opencv.git
 cd opencv
 ```
-After adapting to the opencv directory, then run 
+After adapting to the opencv directory, then run 'nano ./modules/videoio/src/cap_ffmpeg_impl.hpp'. Then add the following constants just below the module you entered :
+```
+#define AV_CODEC_FLAG_GLOBAL_HEADER (1 << 22)
+#define CODEC_FLAG_GLOBAL_HEADER AV_CODEC_FLAG_GLOBAL_HEADER
+#define AVFMT_RAWPICTURE 0x0020
+```
+Now build it
+```
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=Release -D WITH_CUDA=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make -j 3
+sudo make install
+```
+## 2.Install Pangolin
+We will use an older commit version of Pangolin for compatibility.
+```
+cd ~/Dev
+git clone https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin 
+git checkout 86eb4975fc4fc8b5d92148c2e370045ae9bf9f5d
+mkdir build 
+cd build 
+cmake .. -D CMAKE_BUILD_TYPE=Release 
+make -j 3 
+sudo make install
+```
+## 3. Install DBoW2
+```
+cd ~/Dev
+git clone https://github.com/dorian3d/DBoW2.git
+cd DBoW2
+mkdir build 
+cd build 
+cmake .. -DCMAKE_BUILD_TYPE=Release 
+sudo make install
+```
+## 4. Install g2o
+```
+cd ~/Dev
+git clone https://github.com/RainerKuemmerle/g2o.git 
+cd g2o
+mkdir build 
+cd build 
+cmake .. -DCMAKE_BUILD_TYPE=Release 
+sudo make install
+```
